@@ -1,0 +1,41 @@
+{% extends 'user/user_base.html' %}
+
+{% block content %}
+<h2>🧪 Prediction Result</h2>
+
+<div class="result-box" style="padding:20px; background:#f9f9f9; border-radius:10px;">
+    <p><strong>Disease:</strong> {{ prediction.disease }}</p>
+    <p><strong>Confidence:</strong> {{ "%.2f"|format(prediction.confidence) }}%</p>
+    <img src="{{ prediction.image_url }}" alt="Scanned Image" width="200" style="border-radius:10px; border:1px solid #ccc;">
+
+    <hr style="margin:30px 20px;">
+
+    <h3>📝 Feedback</h3>
+    <form method="POST" action="{{ url_for('submit_feedback') }}">
+        <input type="hidden" name="user_id" value="{{ session['user_id'] }}">
+        <input type="hidden" name="disease" value="{{ prediction.disease }}">
+        <input type="hidden" name="confidence" value="{{ prediction.confidence }}">
+        <input type="hidden" name="image_name" value="{{ prediction.image_url.split('/')[-1] }}">
+
+        <p>Was this result helpful?</p>
+        <label><input type="radio" name="helpful" value="yes" required> Yes</label>
+        <label><input type="radio" name="helpful" value="no"> No</label>
+
+        <div id="reason-box" style="margin-top:10px; display:none;">
+            <label for="reason">Why not?</label>
+            <textarea name="reason" rows="3" style="width:100%; border-radius:8px; border:1px solid #ccc;"></textarea>
+        </div>
+
+        <button type="submit" style="margin-top:15px;">Submit Feedback</button>
+    </form>
+</div>
+
+<script>
+document.addEventListener('DOMContentLoaded', function () {
+    const radios = document.getElementsByName("helpful");
+    radios.forEach(r => r.addEventListener("change", () => {
+        document.getElementById("reason-box").style.display = (r.value === "no" && r.checked) ? "block" : "none";
+    }));
+});
+</script>
+{% endblock %}

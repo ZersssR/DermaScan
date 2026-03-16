@@ -1,0 +1,61 @@
+{% extends 'admin/admin_base.html' %}
+
+{% block content %}
+<h2>🗣️ User Feedback Monitor</h2>
+<p>All prediction results where users submitted feedback.</p>
+
+<div style="overflow-x:auto;">
+    <table>
+        <thead>
+            <tr>
+                <th>User</th>
+                <th>Disease</th>
+                <th>Confidence (%)</th>
+                <th>Image</th>
+                <th>Helpful?</th>
+                <th>Reason (if not helpful)</th>
+                <th>Timestamp</th>
+            </tr>
+        </thead>
+        <tbody>
+  {% for item in low_conf %}
+  <tr>
+    <td>{{ item.username }}</td>
+    <td>{{ item.disease }}</td>
+
+    <td class="{% if item.helpful == 'no' %}low-red{% elif item.helpful == 'yes' %}low-green{% else %}low-gray{% endif %}">
+      {{ "%.2f"|format(item.confidence) }}
+    </td>
+
+    <td>
+      <img src="{{ url_for('static', filename='uploads/' + item.image) }}" 
+           alt="Prediction Image" width="80" style="border-radius:8px; border:1px solid #ccc;">
+    </td>
+
+    <td class="{% if item.helpful == 'no' %}low-red{% elif item.helpful == 'yes' %}low-green{% else %}low-gray{% endif %}">
+      {% if item.helpful == 'yes' %}
+        Yes
+      {% elif item.helpful == 'no' %}
+        No
+      {% else %}
+        No feedback yet
+      {% endif %}
+    </td>
+
+    <td>
+      {% if item.reason %}
+        {{ item.reason }}
+      {% else %}
+        -
+      {% endif %}
+    </td>
+
+    <td>{{ item.timestamp }}</td>
+  </tr>
+  {% else %}
+  <tr><td colspan="7" style="text-align:center;">😐 No predictions found.</td></tr>
+  {% endfor %}
+</tbody>
+    </table>
+</div>
+{% endblock %}

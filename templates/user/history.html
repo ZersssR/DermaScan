@@ -1,0 +1,31 @@
+{% extends 'user/user_base.html' %}
+
+{% block title %}Prediction History{% endblock %}
+
+{% block content %}
+<h2 style="text-align: center;">Your Prediction History</h2>
+
+<table style="margin: 20px auto; width: 90%; border-collapse: collapse;">
+  <thead>
+    <tr style="background-color: #23697a; color: white;">
+      <th style="padding: 10px;">Date & Time</th>
+      <th>Disease</th>
+      <th>Confidence</th>
+      <th>Image</th>
+    </tr>
+  </thead>
+  <tbody>
+    {% for record in prediction_history %}
+    <tr style="text-align: center;">
+      <td style="padding: 10px;">{{ record.date_time }}</td>
+      <td>{{ record.disease }}</td>
+      <td>{{ record.confidence }}%</td>
+      <td>
+        <img src="{{ url_for('static', filename='uploads/' + record.image_filename) }}"
+             alt="Result Image" width="100">
+      </td>
+    </tr>
+    {% endfor %}
+  </tbody>
+</table>
+{% endblock %}

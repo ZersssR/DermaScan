@@ -1,0 +1,35 @@
+{% extends 'user/user_base.html' %}
+
+{% block title %}Find Clinics{% endblock %}
+
+{% block content %}
+<h2>Find Dermatology Clinics</h2>
+
+<form method="POST" action="{{ url_for('clinics') }}">
+    <select name="state" required>
+        <option value="">Select Your State</option>
+        {% if states %}
+            {% for state in states %}
+                <option value="{{ state[0] }}">{{ state[1] }}</option>
+            {% endfor %}
+        {% endif %}
+    </select>
+    <button type="submit">Find Clinics</button>
+</form>
+
+{% if clinics %}
+<div class="clinic-list">
+    <h4>Available Clinics in {{ state_name }}:</h4>
+    <ul>
+        {% for clinic in clinics %}
+            <li>
+                <strong>{{ clinic[0] }}</strong><br>
+                Address: {{ clinic[1] }}<br>
+                Phone: {{ clinic[2] }}<br>
+                Email: {{ clinic[3] }}
+            </li>
+        {% endfor %}
+    </ul>
+</div>
+{% endif %}
+{% endblock %}

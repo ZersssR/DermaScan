@@ -1,0 +1,204 @@
+
+/* ============================
+   DermaScan User Style (PadiScan-inspired)
+   ============================ */
+
+   @import url('https://fonts.googleapis.com/css2?family=Poppins:wght@300;500;700&display=swap');
+
+   body {
+       font-family: 'Poppins', sans-serif;
+       background: linear-gradient(to bottom right, #e9f5ff, #ffffff);
+       margin: 0;
+       padding: 0;
+       color: #333;
+   }
+   
+   h1, h2, h3 {
+       color: #2b6777;
+       margin-bottom: 10px;
+   }
+   
+   .container {
+       max-width: 900px;
+       margin: auto;
+       padding: 20px;
+       background: rgba(255, 255, 255, 0.8);
+       border-radius: 16px;
+       box-shadow: 0 8px 20px rgba(0,0,0,0.1);
+   }
+   
+   input[type="text"], input[type="password"], input[type="email"], select {
+       width: 100%;
+       padding: 12px 15px;
+       margin: 10px 0;
+       border: 1px solid #ccc;
+       border-radius: 12px;
+       outline: none;
+       font-size: 1rem;
+   }
+   
+   input[type="file"] {
+       margin: 10px 0;
+   }
+   
+   button {
+       background-color: #52ab98;
+       color: white;
+       padding: 12px 20px;
+       font-size: 1rem;
+       border: none;
+       border-radius: 12px;
+       cursor: pointer;
+       transition: all 0.3s ease-in-out;
+       box-shadow: 0 4px 10px rgba(0,0,0,0.1);
+   }
+   
+   button:hover {
+       background-color: #408e83;
+       transform: scale(1.03);
+   }
+   
+   .card {
+       background: white;
+       border-radius: 16px;
+       padding: 20px;
+       box-shadow: 0 4px 12px rgba(0,0,0,0.1);
+       margin-bottom: 20px;
+       transition: 0.3s ease;
+   }
+   
+   .card:hover {
+       transform: translateY(-5px);
+   }
+   
+   img {
+       max-width: 100%;
+       border-radius: 12px;
+       margin-top: 10px;
+   }
+   
+   .navbar {
+    background-color: #2b6777;
+    color: white;
+    padding: 15px 25px;
+    font-size: 1.2rem;
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    position: fixed;
+    top: 0;
+    width: 100%;
+    z-index: 10;
+    box-shadow: 0 2px 8px rgba(0, 0, 0, 0.1);
+}
+   
+   .footer {
+       text-align: center;
+       padding: 15px;
+       color: #888;
+       font-size: 0.9rem;
+       margin-top: 30px;
+   }
+
+   .navbar {
+    background-color: #2b6777;
+    color: white;
+    padding: 15px 25px;
+    font-size: 1.2rem;
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    position: fixed;
+    top: 0;
+    width: 100%;
+    z-index: 10;
+    box-shadow: 0 2px 8px rgba(0, 0, 0, 0.1);
+}
+
+.learn-more-btn {
+    display: inline-block;
+    background-color: #38b6ff;
+    color: white;
+    padding: 10px 18px;
+    margin-top: 15px;
+    font-size: 15px;
+    border: none;
+    border-radius: 8px;
+    text-decoration: none;
+    transition: 0.3s ease;
+}
+
+.learn-more-btn:hover {
+    background-color: #1b8fd1;
+    text-decoration: none;
+}
+
+.main-content {
+    padding-top: 90px;
+}
+
+.prediction-result {
+    background-color: #fff;
+    border-radius: 12px;
+    box-shadow: 0 4px 20px rgba(0, 0, 0, 0.1);
+    padding: 30px;
+    max-width: 600px;
+    margin: 40px auto;
+    text-align: center;
+}
+
+.prediction-result h3 {
+    font-size: 22px;
+    color: #e91e63; /* Pink title */
+    margin-bottom: 10px;
+}
+
+.prediction-result p {
+    font-size: 16px;
+    color: #444;
+    margin-bottom: 20px;
+}
+.upload-form {
+    text-align: center;
+    margin-top: 30px;
+}
+
+.upload-form h3 {
+    font-size: 20px;
+    margin-bottom: 10px;
+}
+.alert {
+    padding: 10px;
+    margin: 10px 0;
+    border-radius: 8px;
+    font-weight: 500;
+    text-align: center;
+}
+
+.alert-success {
+    background-color: #d4edda;
+    color: #155724;
+}
+
+.alert-error {
+    background-color: #f8d7da;
+    color: #721c24;
+}
+
+.modal {
+  display: none;
+  position: fixed;
+  z-index: 999;
+  left: 0; top: 0;
+  width: 100%; height: 100%;
+  background: rgba(0,0,0,0.4);
+  justify-content: center;
+  align-items: center;
+}
+
+.modal-content {
+  background: white;
+  padding: 20px;
+  border-radius: 10px;
+  width: 300px;
+}

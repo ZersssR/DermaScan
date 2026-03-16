@@ -1,0 +1,15 @@
+<nav class="navbar">
+  <div class="nav-left">
+    <a href="{{ url_for('dashboard') }}"><i class="fa fa-home"></i> Home</a>
+    <a href="{{ url_for('clinics') }}"><i class="fa fa-clinic-medical"></i> Clinics</a>
+    <a href="{{ url_for('history') }}"><i class="fa fa-book"></i> History</a>
+    <a href="{{ url_for('edit_profile') }}"><i class="fa fa-user"></i> Profile</a>
+  </div>
+  <div class="nav-right">
+    {% if 'user_id' in session or 'admin_id' in session %}
+      <a href="{{ url_for('logout') }}" class="logout-btn">Logout</a>
+    {% else %}
+      <a href="{{ url_for('login') }}" class="login-btn">Login</a>
+    {% endif %}
+  </div>
+</nav>

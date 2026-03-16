@@ -1,0 +1,11 @@
+{% extends 'admin/admin_base.html' %}
+
+{% block content %}
+<h2>👤 Registered Users</h2>
+<table border="1">
+    <tr><th>UserID</th><th>Username</th><th>Email</th></tr>
+    {% for u in users %}
+    <tr><td>{{ u[0] }}</td><td>{{ u[1] }}</td><td>{{ u[3] }}</td></tr>
+    {% endfor %}
+</table>
+{% endblock %}

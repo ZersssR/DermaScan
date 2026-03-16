@@ -1,0 +1,13 @@
+{% extends 'user/user_base.html' %}
+
+{% block title %}Disease Info{% endblock %}
+
+{% block content %}
+<h2>Disease Details</h2>
+<h3>{{ data.name }}</h3>
+<p><strong>Information:</strong></p>
+<p>{{ data.info }}</p>
+<p><strong>Treatment:</strong></p>
+<p>{{ data.treatment }}</p>
+<a href="{{ url_for('dashboard') }}">Back to Dashboard</a>
+{% endblock %}

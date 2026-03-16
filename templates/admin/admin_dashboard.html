@@ -1,0 +1,73 @@
+{% extends 'admin/admin_base.html' %}
+
+{% block content %}
+<h2>📊 Admin Dashboard</h2>
+
+<!-- STAT CARDS -->
+<div class="dashboard-cards" style="display:flex; flex-wrap:wrap; gap:20px; margin-bottom:30px;">
+    <div class="card" style="flex:1; min-width:200px; background:#f0f0f0; padding:20px; border-radius:10px;">
+        <h4>👤 Total Users</h4>
+        <p style="font-size:2rem;">{{ total_users }}</p>
+    </div>
+    <div class="card" style="flex:1; min-width:200px; background:#f0f0f0; padding:20px; border-radius:10px;">
+        <h4>💉 Diseases</h4>
+        <p style="font-size:2rem;">{{ total_diseases }}</p>
+    </div>
+    <div class="card" style="flex:1; min-width:200px; background:#f0f0f0; padding:20px; border-radius:10px;">
+        <h4>🏥 Clinics</h4>
+        <p style="font-size:2rem;">{{ total_clinics }}</p>
+    </div>
+    <div class="card" style="flex:1; min-width:200px; background:#f0f0f0; padding:20px; border-radius:10px;">
+        <h4>🔬 Predictions</h4>
+        <p style="font-size:2rem;">{{ total_predictions }}</p>
+    </div>
+</div>
+
+<!-- DISEASE BAR CHART -->
+<h3>🧪 Most Common Diseases</h3>
+<canvas id="diseaseChart" width="400" height="400"></canvas>
+
+<!-- CHART.JS -->
+<script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
+
+<!-- DISEASE DATA -->
+<script id="diseaseStats" type="application/json">
+    {{ disease_stats | tojson }}
+</script>
+
+<!-- RENDER CHART -->
+<script>
+document.addEventListener('DOMContentLoaded', function () {
+    const rawData = document.getElementById('diseaseStats').textContent;
+    const diseaseStats = JSON.parse(rawData);
+
+    const labels = diseaseStats.map(item => item[0]);
+    const data = diseaseStats.map(item => item[1]);
+    const colors = labels.map(() =>
+        '#' + Math.floor(Math.random() * 16777215).toString(16).padStart(6, '0')
+    );
+
+    const ctx = document.getElementById('diseaseChart').getContext('2d');
+    new Chart(ctx, {
+        type: 'bar',
+        data: {
+            labels: labels,
+            datasets: [{
+                label: 'Prediction Count',
+                data: data,
+                backgroundColor: colors
+            }]
+        },
+        options: {
+            responsive: true,
+            scales: {
+                y: {
+                    beginAtZero: true,
+                    ticks: { stepSize: 1 }
+                }
+            }
+        }
+    });
+});
+</script>
+{% endblock %}

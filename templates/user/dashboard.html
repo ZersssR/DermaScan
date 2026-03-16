@@ -1,0 +1,97 @@
+{% extends 'user/user_base.html' %}
+
+{% block title %}User Dashboard{% endblock %}
+
+{% block content %}
+<div class="upload-form">
+    <h2>Welcome, {{ session.username }}!</h2>
+
+    <h3>Skin Disease Prediction</h3>
+    <form method="POST" enctype="multipart/form-data" action="{{ url_for('dashboard') }}">
+        <input type="file" name="image" required>
+        <button type="submit">Predict</button>
+    </form>
+</div>
+
+<!-- Prediction Results -->
+{% if prediction %}
+<div class="prediction-result">
+    <h3>Prediction: {{ prediction.disease }}</h3>
+    <p>Confidence: {{ "%.2f"|format(prediction.confidence) }}%</p>
+
+    <div style="margin-top: 20px; text-align: center;">
+        <a class="learn-more-btn" href="{{ url_for('disease_info', name=prediction.disease) }}">
+            <i class="fa fa-info-circle"></i> Learn More
+        </a>
+    </div>
+
+    <hr style="margin: 30px 0;">
+
+    <h3>📝 Feedback</h3>
+    <form method="POST" action="{{ url_for('submit_feedback') }}">
+        <input type="hidden" name="user_id" value="{{ session['user_id'] }}">
+        <input type="hidden" name="disease" value="{{ prediction.disease }}">
+        <input type="hidden" name="confidence" value="{{ prediction.confidence }}">
+        <input type="hidden" name="image_name" value="{{ prediction.image_url.split('/')[-1] }}">
+
+        <p>Was this result helpful?</p>
+        <label><input type="radio" name="helpful" value="yes" required> Yes</label>
+        <label><input type="radio" name="helpful" value="no"> No</label>
+
+        <div id="reason-box" style="margin-top:10px; display:none;">
+            <label for="reason">Why not?</label>
+            <textarea name="reason" rows="3" style="width:100%; border-radius:8px;"></textarea>
+        </div>
+
+        <button type="submit" style="margin-top:15px;">Submit Feedback</button>
+    </form>
+</div>
+
+<div id="successModal" class="modal">
+  <div class="modal-content" style="text-align:center;">
+    <h3 style="color:green;">✅ Feedback Submitted!</h3>
+    <p>Thank you for your response.</p>
+    <button onclick="closeSuccessModal()">OK</button>
+  </div>
+</div>
+
+<script>
+document.addEventListener("DOMContentLoaded", function () {
+    const radios = document.getElementsByName("helpful");
+    const reasonBox = document.getElementById("reason-box");
+    radios.forEach(r => {
+        r.addEventListener("change", () => {
+            reasonBox.style.display = (r.value === "no" && r.checked) ? "block" : "none";
+        });
+    });
+});
+</script>
+{% endif %}
+<!-- ✅ Feedback Success Modal -->
+<div id="successModal" class="modal">
+  <div class="modal-content" style="text-align:center;">
+    <h3 style="color:green;">✅ Feedback Submitted!</h3>
+    <p>Thank you for your response.</p>
+    <button onclick="closeSuccessModal()">OK</button>
+  </div>
+</div>
+
+<script>
+function closeSuccessModal() {
+  document.getElementById("successModal").style.display = "none";
+}
+</script>
+
+{% with messages = get_flashed_messages(with_categories=true) %}
+  {% if messages %}
+    <script>
+      window.addEventListener("DOMContentLoaded", function () {
+        const successModal = document.getElementById("successModal");
+        if (successModal) {
+          successModal.style.display = "flex";
+        }
+      });
+    </script>
+  {% endif %}
+{% endwith %}
+{% endblock %}

@@ -1,0 +1,77 @@
+{% extends 'admin/admin_base.html' %}
+
+{% block content %}
+<h2>💉 Manage Disease Information</h2>
+
+<div class="add-disease-form">
+    <h3 id="formTitle">Add New Disease</h3>
+    <form method="POST" id="diseaseForm" action="{{ url_for('add_disease') }}">
+        <input type="hidden" name="disease_id" id="disease_id">
+
+        <label>Disease Name:</label>
+        <input type="text" name="name" required>
+
+        <label>Disease Info:</label>
+        <textarea name="info" required></textarea>
+
+        <label>Treatment Info:</label>
+        <textarea name="treatment" required></textarea>
+
+        <button type="submit" id="diseaseSubmitBtn">Add Disease</button>
+
+        {% with messages = get_flashed_messages(with_categories=true) %}
+        {% if messages %}
+            {% for category, message in messages %}
+                <div class="alert alert-{{ category }}">{{ message }}</div>
+            {% endfor %}
+        {% endif %}
+        {% endwith %}
+    </form>
+</div>
+
+<hr style="margin:30px 0;">
+
+<h3>📋 Existing Disease Entries</h3>
+<div style="overflow-x:auto;">
+    <table>
+        <thead>
+            <tr>
+                <th>Name</th>
+                <th>Info</th>
+                <th>Treatment</th>
+                <th>Action</th>
+            </tr>
+        </thead>
+        <tbody>
+            {% for d in diseases %}
+            <tr>
+                <td>{{ d[1] }}</td>
+                <td>{{ d[2][:100] }}...</td>
+                <td>{{ d[3][:100] }}...</td>
+                <td>
+                    <a href="#" class="edit-btn"
+                       onclick="editDisease('{{ d[0] }}', `{{ d[1] }}`, `{{ d[2] }}`, `{{ d[3] }}`)">Edit</a>
+                    |
+                    <a href="{{ url_for('delete_disease', id=d[0]) }}"
+                       class="delete-btn"
+                       onclick="return confirm('Delete this disease?')">Delete</a>
+                </td>
+            </tr>
+            {% endfor %}
+        </tbody>
+    </table>
+</div>
+
+<script>
+function editDisease(id, name, info, treatment) {
+    document.getElementById("disease_id").value = id;
+    document.querySelector("input[name='name']").value = name;
+    document.querySelector("textarea[name='info']").value = info;
+    document.querySelector("textarea[name='treatment']").value = treatment;
+
+    document.getElementById("diseaseForm").action = "/admin/update_disease/" + id;
+    document.getElementById("diseaseSubmitBtn").textContent = "Update Disease";
+    document.getElementById("formTitle").textContent = "Edit Disease";
+}
+</script>
+{% endblock %}

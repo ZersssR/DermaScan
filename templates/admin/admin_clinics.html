@@ -1,0 +1,149 @@
+{% extends 'admin/admin_base.html' %}
+
+{% block content %}
+<h2>🏥 Manage Dermatology Clinics</h2>
+
+<div class="add-clinic-form">
+    <h3 id="formTitle">Add New Clinic</h3>
+    <form method="POST" id="clinicForm" action="{{ url_for('add_clinic') }}">
+        <input type="hidden" name="clinic_id" id="clinic_id">
+
+        <label>State:</label>
+        <select name="state_id" required>
+            {% for state in states %}
+            <option value="{{ state[0] }}">{{ state[1] }}</option>
+            {% endfor %}
+        </select>
+
+        <label>Clinic Name:</label>
+        <input type="text" name="clinic_name" required>
+
+        <label>Address:</label>
+        <textarea name="address" required></textarea>
+
+        <label>Phone (optional):</label>
+        <input type="text" name="phone">
+
+        <label>Email (optional):</label>
+        <input type="email" name="email">
+
+        <button type="submit" id="clinicSubmitBtn">Add Clinic</button>
+
+        {% with messages = get_flashed_messages(with_categories=true) %}
+        {% if messages %}
+            {% for category, message in messages %}
+                <div class="alert alert-{{ category }}">{{ message }}</div>
+            {% endfor %}
+        {% endif %}
+        {% endwith %}
+    </form>
+</div>
+
+<hr style="margin:30px 0;">
+
+<input type="text" id="clinicSearch" placeholder="🔍 Search clinics..." style="margin-bottom:10px; padding:8px; width:100%; border-radius:6px; border:1px solid #ccc;">
+
+<div class="clinic-list" style="overflow-x:auto;">
+    <h3>📋 Existing Clinics</h3>
+    <table>
+        <thead>
+            <tr>
+                <th>State</th>
+                <th>Clinic Name</th>
+                <th>Address</th>
+                <th>Contact</th>
+                <th>Action</th>
+            </tr>
+        </thead>
+        <tbody id="clinicTableBody">
+            {% for clinic in clinics %}
+            <tr>
+                <td>{{ clinic[6] }}</td>
+                <td>{{ clinic[2] }}</td>
+                <td>{{ clinic[3] }}</td>
+                <td>
+                    {% if clinic[4] %}{{ clinic[4] }}<br>{% endif %}
+                    {% if clinic[5] %}{{ clinic[5] }}{% endif %}
+                </td>
+                <td>
+                    <a href="#" class="edit-btn"
+                       onclick="editClinic('{{ clinic[0] }}', '{{ clinic[1] }}', '{{ clinic[2] }}', '{{ clinic[3] }}', '{{ clinic[4] }}', '{{ clinic[5] }}')">Edit</a>
+                    |
+                    <a href="{{ url_for('delete_clinic', clinic_id=clinic[0]) }}"
+                       class="delete-btn"
+                       onclick="return confirm('Delete this clinic?')">Delete</a>
+                </td>
+            </tr>
+            {% endfor %}
+        </tbody>
+    </table>
+    <div id="pagination" style="margin-top:15px; display:flex; gap:10px; justify-content:center;"></div>
+</div>
+
+<script>
+function editClinic(id, state_id, name, address, phone, email) {
+    document.getElementById("clinic_id").value = id;
+    document.querySelector("input[name='clinic_name']").value = name;
+    document.querySelector("textarea[name='address']").value = address;
+    document.querySelector("input[name='phone']").value = phone;
+    document.querySelector("input[name='email']").value = email;
+
+    const stateSelect = document.querySelector("select[name='state_id']");
+    for (let opt of stateSelect.options) {
+        if (opt.value == state_id) {
+            opt.selected = true;
+            break;
+        }
+    }
+
+    document.getElementById("clinicForm").action = "/admin/update_clinic";
+    document.getElementById("clinicSubmitBtn").textContent = "Update Clinic";
+    document.getElementById("formTitle").textContent = "Edit Clinic";
+}
+
+document.addEventListener('DOMContentLoaded', function () {
+    const input = document.getElementById("clinicSearch");
+    const tableBody = document.getElementById("clinicTableBody");
+    const rows = Array.from(tableBody.querySelectorAll("tr"));
+    const rowsPerPage = 5;
+    let currentPage = 1;
+
+    function renderTable(filter = "") {
+        const filteredRows = rows.filter(row => {
+            return row.textContent.toLowerCase().includes(filter.toLowerCase());
+        });
+
+        const start = (currentPage - 1) * rowsPerPage;
+        const end = start + rowsPerPage;
+
+        tableBody.innerHTML = "";
+        filteredRows.slice(start, end).forEach(row => tableBody.appendChild(row));
+        renderPagination(filteredRows.length);
+    }
+
+    function renderPagination(totalRows) {
+        const paginationDiv = document.getElementById("pagination");
+        paginationDiv.innerHTML = "";
+        const totalPages = Math.ceil(totalRows / rowsPerPage);
+
+        for (let i = 1; i <= totalPages; i++) {
+            const btn = document.createElement("button");
+            btn.textContent = i;
+            btn.onclick = () => {
+                currentPage = i;
+                renderTable(input.value);
+            };
+            if (i === currentPage) btn.style.fontWeight = "bold";
+            paginationDiv.appendChild(btn);
+        }
+    }
+
+    input.addEventListener("input", () => {
+        currentPage = 1;
+        renderTable(input.value);
+    });
+
+    renderTable();
+});
+</script>
+{% endblock %}

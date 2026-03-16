@@ -1,0 +1,186 @@
+/* =============================
+   ADMIN STYLE - Top Nav Layout
+   ============================= */
+
+@import url('https://fonts.googleapis.com/css2?family=Poppins:wght@300;500;700&display=swap');
+
+* {
+    margin: 0;
+    padding: 0;
+    box-sizing: border-box;
+}
+
+body {
+    font-family: 'Poppins', sans-serif;
+    background: #f5f6fa;
+    color: #333;
+    min-height: 100vh;
+}
+
+/* ========== TOP NAVBAR ========== */
+.topnav {
+    background-color: #964B00;
+    overflow: hidden;
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    padding: 12px 25px;
+    box-shadow: 0 2px 5px rgba(0, 0, 0, 0.1);
+}
+
+.topnav .nav-left a,
+.topnav .nav-right a {
+    color: white;
+    text-decoration: none;
+    font-weight: 500;
+    margin: 0 10px;
+    font-size: 16px;
+    transition: color 0.3s ease;
+}
+
+.topnav .nav-left a:hover,
+.topnav .nav-right a:hover {
+    color: #ffd4b3;
+}
+
+
+.nav-left {
+    display: flex;
+    align-items: center;
+}
+
+.nav-right {
+    display: flex;
+    align-items: center;
+}
+
+/* ========== PAGE CONTENT ========== */
+.main-content {
+    padding: 30px 20px;
+}
+
+.card {
+    background: white;
+    border-radius: 16px;
+    padding: 20px 30px;
+    margin: 0 auto;
+    max-width: 1000px;
+    box-shadow: 0 6px 12px rgba(0, 0, 0, 0.08);
+}
+
+/* ========== FORM ELEMENTS ========== */
+button {
+    background-color: #ff7e67;
+    color: white;
+    padding: 12px 20px;
+    border: none;
+    border-radius: 10px;
+    font-size: 1rem;
+    cursor: pointer;
+    transition: all 0.3s ease-in-out;
+}
+
+button:hover {
+    background-color: #e25c48;
+    transform: scale(1.03);
+}
+
+input[type="text"],
+input[type="password"],
+input[type="email"],
+textarea,
+select {
+    width: 100%;
+    padding: 12px 15px;
+    margin: 10px 0;
+    border: 1px solid #ccc;
+    border-radius: 10px;
+    font-size: 1rem;
+    background-color: #fff;
+}
+
+input:focus, textarea:focus, select:focus {
+    outline: none;
+    border-color: #964B00;
+    box-shadow: 0 0 5px rgba(150, 75, 0, 0.4);
+}
+
+/* ========== FOOTER ========== */
+.footer {
+    text-align: center;
+    color: #999;
+    font-size: 0.9rem;
+    padding: 20px;
+    margin-top: 50px;
+}
+table {
+    width: 100%;
+    border-collapse: collapse;
+    margin-top: 20px;
+}
+
+table th, table td {
+    padding: 10px 15px;
+    text-align: left;
+    border-bottom: 1px solid #ddd;
+}
+
+table th {
+    background-color: #f2f2f2;
+    font-weight: 600;
+}
+
+.delete-btn {
+    color: red;
+    font-weight: 500;
+    text-decoration: none;
+}
+
+.delete-btn:hover {
+    text-decoration: underline;
+}
+.low-red {
+  color: red;
+  font-weight: bold;
+}
+
+.low-orange {
+  color: orange;
+  font-weight: bold;
+}
+
+@keyframes blink {
+  0% { background-color: #ffcccc; }
+  50% { background-color: #ffeaea; }
+  100% { background-color: #ffcccc; }
+}
+
+.blink-cell {
+  animation: blink 1s infinite;
+  font-weight: bold;
+  color: red;
+}
+
+.orange-cell {
+  color: orange;
+  font-weight: bold;
+}
+
+.green-cell {
+  color: green;
+  font-weight: bold;
+}
+.low-red {
+  color: red;
+  font-weight: bold;
+}
+
+.low-green {
+  color: green;
+  font-weight: bold;
+}
+.low-gray {
+  color: #999;
+  font-style: italic;
+}
+
