@@ -117,8 +117,6 @@ Future Improvements
 Screenshots
 
 
-![Dermascan Dashboard](dermascan homepage.png)
-![info Page](dermascan info.png)
 ![Result page](dermascan_result.png)
 ![graft accuracy_validation](graft.png)
 
