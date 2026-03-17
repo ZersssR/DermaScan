@@ -116,9 +116,11 @@ Future Improvements
 
 Screenshots
 
-![Student Dashboard](student-dashboard.png)
-![Assessment Page](assessment-page.png)
-![Result Chart](result-chart.png)
+
+![Dermascan Dashboard](dermascan homepage.png)
+![info Page](dermascan info.png)
+![Result page](dermascan_result.png)
+![graft accuracy_validation](graft.png)
 
 
 Author
